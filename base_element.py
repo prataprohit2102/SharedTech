@@ -1,3 +1,4 @@
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
@@ -23,6 +24,11 @@ class BasePageElement(object):
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.locator))
         element = self.driver.find_element(*self.locator)
         return element.get_attribute("value")
+
+    def get_element(self):
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.locator))
+        element = self.driver.find_element(*self.locator)
+        return element
 
     def click(self):
         # WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.locator))
@@ -58,4 +64,10 @@ class HomePage(BasePage):
         self.username_box = username
         self.password_box = password
         self.login_btn.click()
-        logout = self.logout
+
+    def verify_logout_exists(self):
+        try:
+            logout = self.logout.get_element()
+            return logout.is_displayed()
+        except TimeoutException:
+            return False
