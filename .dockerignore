@@ -1,0 +1,17 @@
+.dockerignore
+Dockerfile
+**/__pycache__
+**/*.pyc
+*.pyo
+*.pyd
+.Python
+.cache
+.pytest_cache
+coverage.xml
+*.log
+**/*.logs
+**/logs/*
+.git
+/.idea
+/.cache
+/drivers
